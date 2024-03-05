@@ -1,7 +1,3 @@
-Claro, vou corrigir a inconsistência na nomenclatura. Farei a alteração de "ARS" para "RAS" para manter a consistência em todo o documento.
-
-Aqui está a correção:
-
 # GranularAC - Granular Access Control Library for Node.js
 
 GranularAC is a TypeScript library designed to manage granular access control in Node.js applications. It offers a flexible and customizable solution for defining and enforcing access control rules based on resources, actions, and scopes. By leveraging the concepts of Role-Based Access Control (RBAC), GranularAC allows you to implement fine-grained access control in your application.
@@ -74,13 +70,13 @@ GranularAC can be used to define and enforce access control rules in your applic
 
 ### Creating Permissions
 
-To create permissions, first instantiate the `RAS` (Resource-Action-Scope) class with the desired resource and actions. Then use the `build` method to generate permission strings for specific actions and scopes.
+To create permissions, first instantiate the `ARS` (Action-Resource-Scope) class with the desired resource and actions. Then use the `build` method to generate permission strings for specific actions and scopes.
 
 ```typescript
-import { RAS } from "granular-ac";
+import { ARS } from "granular-ac";
 
 // Define permissions for "post" resource
-const postCredentials = new RAS("post", {
+const postCredentials = new ARS("post", {
   create: ["public", "private", "others"],
   read: ["own", "others", "private"],
   update: ["own", "others", "private"],
@@ -104,15 +100,21 @@ const canRead = userCredentials.verify("read", "self", user.permissions);
 
 ### Integrating with Express Middleware
 
-GranularAC can be
-
-integrated with Express middleware to protect routes and endpoints in your application. By verifying permissions before allowing access to certain routes, you can ensure that only authorized users can perform certain actions.
+GranularAC can be integrated with Express middleware to protect routes and endpoints in your application. By verifying permissions before allowing access to certain routes, you can ensure that only authorized users can perform certain actions.
 
 ```typescript
 import express from "express";
-import { RAS } from "granular-ac";
+import { ARS } from "granular-ac";
 
 const app = express();
+
+// Define permissions for "post" resource
+const postCredentials = new ARS("post", {
+  create: ["public", "private", "others"],
+  read: ["own", "others", "private"],
+  update: ["own", "others", "private"],
+  delete: ["own", "others", "private"],
+} as const); // "as const" is used to enforce the type of the object
 
 // Middleware to verify permissions
 function verifyPermissions(req, res, next) {
