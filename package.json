@@ -1,0 +1,25 @@
+{
+  "name": "granular-ac",
+  "version": "1.0.0",
+  "description": "Granular Access Control library for managing permissions.",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "access-control",
+    "permissions",
+    "granular",
+    "authorization",
+    "role-based",
+    "rbac"
+  ],
+  "author": "Ezequias Lopes <ezequiaslopesdev@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "@types/node": "^20.11.24",
+    "ts-jest": "^29.1.2"
+  }
+}
