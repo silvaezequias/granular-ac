@@ -2,10 +2,11 @@
   "name": "granular-ac",
   "version": "1.0.0",
   "description": "Granular Access Control library for managing permissions.",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "dist/index.js",
+  "types": "types/index.d.ts",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc"
   },
   "keywords": [
     "access-control",
