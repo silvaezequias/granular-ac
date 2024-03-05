@@ -87,10 +87,11 @@ const postCredentials = new RAS("post", {
   delete: ["own", "others", "private"],
 } as const); // "as const" is used to enforce the type of the object
 
-postCredentials.build("create"); // 'create:post'
-postCredentials.build("read", "own"); // 'read:post:own'
-postCredentials.build("update", "others"); // 'update:post:others'
-postCredentials.build("delete", "private"); // 'delete:post:private'
+postCredentials.build("create"); // ['create:post']
+postCredentials.build("read", "own"); // ['read:post:own']
+postCredentials.build("update", "others"); // ['update:post:others']
+postCredentials.build("delete", "private"); // ['delete:post:private']
+postCredentials.build("delete", ["others", "public"]); // ['delete:post:others', 'delete:post:public']
 ```
 
 ### Verifying Permissions
