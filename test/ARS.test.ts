@@ -1,7 +1,7 @@
 import { describe, expect, it } from "@jest/globals";
 import { ARS } from "../src/ARS";
 
-describe("`Resource-Action-Scope` Class", () => {
+describe("`Action-Resource-Scope` Class", () => {
   const ars = new ARS("resource", {
     create: ["scope"],
     read: ["scope1", "scope2"],
