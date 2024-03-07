@@ -1,13 +1,13 @@
 {
   "name": "granular-ac",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Granular Access Control library for managing permissions.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "scripts": {
     "test": "jest",
     "build": "tsc",
-    "publish": "npm run build && npm publish"
+    "build:publish": "npm run build && npm publish"
   },
   "keywords": [
     "access-control",
@@ -17,6 +17,14 @@
     "role-based",
     "rbac"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/silvaezequias/granular-ac.git"
+  },
+  "bugs": {
+    "url": "https://github.com/silvaezequias/granular-ac/issues"
+  },
+  "homepage": "https://github.com/silvaezequias/granular-ac#readme",
   "author": "Ezequias Lopes <ezequiaslopesdev@gmail.com>",
   "license": "MIT",
   "devDependencies": {
