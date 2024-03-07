@@ -83,11 +83,15 @@ const postCredentials = new ARS("post", {
   delete: ["own", "others", "private"],
 } as const); // "as const" is used to enforce the type of the object
 
-postCredentials.build("create"); // ['create:post']
-postCredentials.build("read", "own"); // ['read:post:own']
-postCredentials.build("update", "others"); // ['update:post:others']
-postCredentials.build("delete", "private"); // ['delete:post:private']
-postCredentials.build("delete", ["others", "public"]); // ['delete:post:others', 'delete:post:public']
+const permissions = postCredentials.build();
+
+permissions.create.post._this; // 'create:post'
+permissions.read.post.own; // 'read:post:own'
+
+const updatePermissions = permissions.update;
+
+updatePermissions.post.own; // 'update:post:own'
+updatePermissions.post.others; // 'update:post:others'
 ```
 
 ### Verifying Permissions
@@ -116,6 +120,23 @@ const postCredentials = new ARS("post", {
   delete: ["own", "others", "private"],
 } as const); // "as const" is used to enforce the type of the object
 
+// Middleware to set user (may be user from database)
+function setUser(req, res, next) {
+  // building permissions list based on post
+  const permissions = postCredentials.build();
+
+  req.user = {
+    id: 1,
+    // add custom permissions
+    permissions: [
+      permissions.create.post._this,
+      permissions.read.post.own,
+      permissions.update.post.own,
+      permissions.delete.post.own,
+    ],
+  };
+}
+
 // Middleware to verify permissions
 function verifyPermissions(req, res, next) {
   const post = await database.findPost(req.params.postId);
@@ -130,7 +151,7 @@ function verifyPermissions(req, res, next) {
 }
 
 // Route to read a post
-app.get("/posts/:postId", verifyPermissions, (req, res) => {
+app.get("/posts/:postId", setUser, verifyPermissions, (req, res) => {
   // Handle request
 });
 ```
