@@ -1,34 +1,43 @@
 /**
  * Represents the format of a string denoting a resource.
  */
-type StringRFormat = `<resource>`;
+export type StringRFormat = `<resource>`;
 
 /**
  * Represents the format of a string denoting an action with a resource.
  */
-type StringARFormat = `<action>:${StringRFormat}:`;
+export type StringARFormat = `<action>:${StringRFormat}`;
 
 /**
  * Represents the format of a string denoting an action with a resource and a scope.
  */
-type StringARSFormat = `${StringARFormat}:<scope>`;
+export type StringARSFormat = `${StringARFormat}:<scope>`;
 
 /**
  * Represents the actions available for a specific resource.
  */
-interface Action {
+export interface Actions {
   [key: string]: [string, ...string[]];
 }
 
 /**
+ * Represents the action-scope pairs for a specific resource.
+ */
+type ActionScopePairs<A extends Actions> = {
+  [Action in keyof A]: {
+    [Scope in A[Action][number]]: StringARSFormat;
+  };
+};
+
+/**
  * Represents the scope associated with a specific action.
  */
-type Scope<A extends Action, K extends keyof A> = A[K][number];
+type Scope<A extends Actions, K extends keyof A> = A[K][number];
 
 /**
  * Class for managing granular access control based on actions, resources, and scopes.
  */
-export class ARS<A extends Action> {
+export class ARS<A extends Actions> {
   /**
    * Creates an instance of ARS.
    * @param resource - The resource for which access control is managed.
@@ -55,23 +64,30 @@ export class ARS<A extends Action> {
       : StringARSFormat;
   }
 
+  public test() {
+    return {} as ActionScopePairs<A>;
+  }
+
   /**
-   * Builds permission strings for the specified action and scopes.
-   * @param action - The action for which permissions are generated.
-   * @param scopes - The scopes for which permissions are generated (optional).
-   * @returns An array of permission strings.
+   * Builds a list of permission strings for all actions and scopes.
+   * @returns An object containing the permission strings for each action and scope.
    */
-  public build<K extends keyof A>(
-    action: K,
-    scopes?: Scope<A, K> | Scope<A, K>[]
-  ) {
-    if (scopes) {
-      return (Array.isArray(scopes) ? scopes : [scopes]).map((scope) =>
-        this.buildString(action, scope)
-      );
-    } else {
-      return [this.buildString(action) as StringARFormat];
-    }
+  public build() {
+    const actions: any = {};
+
+    Object.keys(this.actions).forEach((action) => {
+      actions[action] = {};
+
+      this.actions[action].forEach((scope) => {
+        actions[action][scope] = this.buildString(action, scope);
+      });
+
+      actions[action]._this = this.buildString(action);
+    });
+
+    return actions as ActionScopePairs<A> & {
+      [key in keyof A]: { _this: StringARFormat };
+    };
   }
 
   /**
