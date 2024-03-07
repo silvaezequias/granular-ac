@@ -1,11 +1,11 @@
 import express from "express";
-import { RAS } from "granular-ac";
+import { ARS } from "granular-ac";
 import { database } from "./database"; // Assuming you have a database module
 
 const app = express();
 
 // Define permissions for creating and reading posts
-const postCredentials = new RAS("post", {
+const postCredentials = new ARS("post", {
   create: ["others"],
   read: ["own", "others"],
 } as const);
