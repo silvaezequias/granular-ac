@@ -6,7 +6,8 @@
   "types": "types/index.d.ts",
   "scripts": {
     "test": "jest",
-    "build": "tsc"
+    "build": "tsc",
+    "publish": "npm run build && npm publish"
   },
   "keywords": [
     "access-control",
