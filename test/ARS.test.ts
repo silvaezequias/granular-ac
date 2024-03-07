@@ -9,6 +9,8 @@ describe("`Action-Resource-Scope` Class", () => {
     delete: ["scope1", "scope2"],
   } as const);
 
+  const arsPermissions = ars.build();
+
   describe("Constructor", () => {
     it("instance should contain correct resource", () => {
       expect(ars.resource).toBe("resource");
@@ -29,22 +31,22 @@ describe("`Action-Resource-Scope` Class", () => {
   });
 
   describe("`build` method", () => {
-    it("should return correct strings", () => {
-      expect(ars.build("create")).toEqual(["create:resource"]);
-      expect(ars.build("read")).toEqual(["read:resource"]);
-      expect(ars.build("update")).toEqual(["update:resource"]);
-      expect(ars.build("delete")).toEqual(["delete:resource"]);
+    it("should return correct permissions for each action", () => {
+      expect(arsPermissions.create._this).toEqual("create:resource");
+      expect(arsPermissions.read._this).toEqual("read:resource");
+      expect(arsPermissions.update._this).toEqual("update:resource");
+      expect(arsPermissions.delete._this).toEqual("delete:resource");
 
-      expect(ars.build("create", "scope")).toEqual(["create:resource:scope"]);
+      expect(arsPermissions.create.scope).toEqual("create:resource:scope");
 
-      expect(ars.build("read", "scope1")).toEqual(["read:resource:scope1"]);
-      expect(ars.build("read", "scope2")).toEqual(["read:resource:scope2"]);
+      expect(arsPermissions.read.scope1).toEqual("read:resource:scope1");
+      expect(arsPermissions.read.scope2).toEqual("read:resource:scope2");
 
-      expect(ars.build("update", "scope1")).toEqual(["update:resource:scope1"]);
-      expect(ars.build("update", "scope2")).toEqual(["update:resource:scope2"]);
+      expect(arsPermissions.update.scope1).toEqual("update:resource:scope1");
+      expect(arsPermissions.update.scope2).toEqual("update:resource:scope2");
 
-      expect(ars.build("delete", "scope1")).toEqual(["delete:resource:scope1"]);
-      expect(ars.build("delete", "scope2")).toEqual(["delete:resource:scope2"]);
+      expect(arsPermissions.delete.scope1).toEqual("delete:resource:scope1");
+      expect(arsPermissions.delete.scope2).toEqual("delete:resource:scope2");
     });
   });
 
