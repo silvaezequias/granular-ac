@@ -64,10 +64,6 @@ export class ARS<A extends Actions> {
       : StringARSFormat;
   }
 
-  public test() {
-    return {} as ActionScopePairs<A>;
-  }
-
   /**
    * Builds a list of permission strings for all actions and scopes.
    * @returns An object containing the permission strings for each action and scope.
