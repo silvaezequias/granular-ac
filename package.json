@@ -7,7 +7,10 @@
   "scripts": {
     "test": "jest",
     "build": "tsc",
-    "build:publish": "npm run build && npm publish"
+    "build:publish": "npm run build && npm publish",
+    "release:patch": "npm version patch && git push && git push --tags",
+    "release:minor": "npm version minor && git push && git push --tags",
+    "release:major": "npm version major && git push && git push --tags"
   },
   "keywords": [
     "access-control",
