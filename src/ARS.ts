@@ -17,7 +17,7 @@ export type StringARSFormat = `${StringARFormat}:<scope>`;
  * Represents the actions available for a specific resource.
  */
 export interface Actions {
-  [key: string]: [string, ...string[]];
+  [action: string]: string[];
 }
 
 /**
