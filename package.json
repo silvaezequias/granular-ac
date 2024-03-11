@@ -1,6 +1,6 @@
 {
   "name": "granular-ac",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Granular Access Control library for managing permissions.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
